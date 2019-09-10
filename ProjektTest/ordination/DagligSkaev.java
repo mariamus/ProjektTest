@@ -13,8 +13,12 @@ public class DagligSkaev extends Ordination {
 		this.doser = doser;
 	}
 
-	public void opretDosis(LocalTime tid, double antal, Enhed enhed) {
-		Dosis dosis = new Dosis(tid, antal, enhed);
+	public ArrayList<Dosis> getDoser() {
+		return doser;
+	}
+
+	public void opretDosis(LocalTime tid, double antal) {
+		Dosis dosis = new Dosis(tid, antal);
 		doser.add(dosis);
 
 	}
