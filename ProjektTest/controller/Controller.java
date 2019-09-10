@@ -144,9 +144,9 @@ public class Controller {
 	public int antalOrdinationerPrVægtPrLægemiddel(double vægtStart, double vægtSlut, Laegemiddel laegemiddel) {
 		int counter = 0;
 		for(Patient p : storage.getAllPatienter()) {
-			if(p.getOrdinationer().size() > 0 && p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
-				for(Ordination o : p.getOrdinationer()) {
-					if(o.getLaegemiddel().equals(laegemiddel)) {
+				if(p.getOrdinationer().size() > 0 && p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
+					for(Ordination o : p.getOrdinationer()) {
+						if(o.getLaegemiddel().equals(laegemiddel)) {
 						counter++;
 					}
 				}
