@@ -7,9 +7,12 @@ public class DagligFast extends Ordination {
 	private Dosis[] doser = new Dosis[4];
 
 	public DagligFast(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel, Dosis[] doser) {
-		// TODO fix antal, saa doser skal vaere fire doser
 		super(startDen, slutDen, laegemiddel);
-		this.doser = doser;
+		if (doser.length > 4) {
+			throw new IllegalArgumentException("Der må max være fire doser");
+		} else {
+			this.doser = doser;
+		}
 	}
 
 	public Dosis[] getDoser() {

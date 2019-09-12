@@ -8,12 +8,15 @@ public abstract class Ordination {
 	private LocalDate slutDen;
 	private Laegemiddel laegemiddel;
 
-	// TODO constructor (med specifikation)
 	public Ordination(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel) {
-		super();
-		this.startDen = startDen;
-		this.slutDen = slutDen;
-		this.laegemiddel = laegemiddel;
+		// if-else lavet, saa ingen mennesker doer
+		if (startDen.isAfter(slutDen)) {
+			throw new IllegalArgumentException("Startdato er efter slutdato");
+		} else {
+			this.startDen = startDen;
+			this.slutDen = slutDen;
+			this.laegemiddel = laegemiddel;
+		}
 	}
 
 	public LocalDate getStartDen() {
