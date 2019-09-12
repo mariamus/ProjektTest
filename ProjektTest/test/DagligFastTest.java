@@ -16,11 +16,10 @@ public class DagligFastTest {
 	Dosis d2 = new Dosis(LocalTime.of(11, 00), 2);
 	Dosis d3 = new Dosis(LocalTime.of(17, 00), 1);
 	Dosis d4 = new Dosis(LocalTime.of(23, 00), 0);
-
-	Dosis d6 = new Dosis(LocalTime.of(00, 00), 0);
+	Dosis d5 = new Dosis(LocalTime.of(00, 00), 0);
 
 	Dosis[] doser = { d, d2, d3, d4 };
-	Dosis[] doser2 = { d6, d6, d6, d6 };
+	Dosis[] doser2 = { d5, d5, d5, d5 };
 
 	private DagligFast df = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), null, doser);
 	private DagligFast df2 = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), null, doser2);
@@ -38,11 +37,10 @@ public class DagligFastTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testUgyldigDosisDagligFast() {
-		Dosis d5 = new Dosis(LocalTime.of(23, 00), -1);
-		Dosis[] illegalDoser = { d, d2, d3, d5 };
-		DagligFast df3 = new DagligFast(LocalDate.of(2019, 9, 9), LocalDate.of(2019, 10, 10), null, illegalDoser);
-		assertNotNull(df3);
+	public void testUgyldigDosis() {
+		Dosis d6 = new Dosis(LocalTime.of(23, 00), -1);
+		assertNotNull(d6);
+		fail("Mangler exception");
 	}
 
 	@Test

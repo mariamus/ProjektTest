@@ -10,7 +10,11 @@ public class PN extends Ordination {
 
 	public PN(LocalDate startDen, LocalDate slutDen, Laegemiddel laegemiddel, double antalEnheder) {
 		super(startDen, slutDen, laegemiddel);
-		this.antalEnheder = antalEnheder;
+		if (antalEnheder <= 0) {
+			throw new IllegalArgumentException("Antal enheder må ikke være under 0");
+		} else {
+			this.antalEnheder = antalEnheder;
+		}
 	}
 
 	/**

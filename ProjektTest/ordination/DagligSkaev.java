@@ -18,9 +18,12 @@ public class DagligSkaev extends Ordination {
 	}
 
 	public void opretDosis(LocalTime tid, double antal) {
-		Dosis dosis = new Dosis(tid, antal);
-		doser.add(dosis);
-
+		if (doser == null) {
+			throw new NullPointerException("Doser er ikke initialiseret");
+		} else {
+			Dosis dosis = new Dosis(tid, antal);
+			doser.add(dosis);
+		}
 	}
 
 	@Override
