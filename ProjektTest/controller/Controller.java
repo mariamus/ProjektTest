@@ -42,13 +42,8 @@ public class Controller {
 	 */
 	public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			double antal) {
-		PN pn;
-		if (startDen.isAfter(slutDen)) {
-			throw new IllegalArgumentException("Startdato er efter slutdato");
-		} else {
-			pn = new PN(startDen, slutDen, laegemiddel, antal);
-			patient.addOrdination(pn);
-		}
+		PN pn = new PN(startDen, slutDen, laegemiddel, antal);
+		patient.addOrdination(pn);
 		return pn;
 	}
 
@@ -59,22 +54,15 @@ public class Controller {
 	 */
 	public DagligFast opretDagligFastOrdination(LocalDate startDen, LocalDate slutDen, Patient patient,
 			Laegemiddel laegemiddel, double morgenAntal, double middagAntal, double aftenAntal, double natAntal) {
-		DagligFast df;
-		
 
+		Dosis d = new Dosis(LocalTime.of(05, 00), morgenAntal);
+		Dosis d2 = new Dosis(LocalTime.of(11, 00), middagAntal);
+		Dosis d3 = new Dosis(LocalTime.of(17, 00), aftenAntal);
+		Dosis d4 = new Dosis(LocalTime.of(23, 00), natAntal);
 
-		if (startDen.isAfter(slutDen)) {
-			throw new IllegalArgumentException("Startdato er efter slutdato");
-		} else {
-			Dosis d = new Dosis(LocalTime.of(05, 00), morgenAntal);
-			Dosis d2 = new Dosis(LocalTime.of(11, 00), middagAntal);
-			Dosis d3 = new Dosis(LocalTime.of(17, 00), aftenAntal);
-			Dosis d4 = new Dosis(LocalTime.of(23, 00), natAntal);
-			
-			Dosis[] doser = {d, d2, d3, d4};
-			df = new DagligFast(startDen, slutDen, laegemiddel, doser);
-			patient.addOrdination(df);
-		}
+		Dosis[] doser = { d, d2, d3, d4 };
+		DagligFast df = new DagligFast(startDen, slutDen, laegemiddel, doser);
+		patient.addOrdination(df);
 		return df;
 	}
 
@@ -88,15 +76,13 @@ public class Controller {
 	 */
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen, LocalDate slutDen, Patient patient,
 			Laegemiddel laegemiddel, LocalTime[] klokkeSlet, double[] antalEnheder) {
-		
-		if (startDen.isAfter(slutDen)) {
-			throw new IllegalArgumentException("Startdato er efter slutdato");
-		} else if (klokkeSlet.length != antalEnheder.length){
+
+		if (klokkeSlet.length != antalEnheder.length) {
 			throw new IllegalArgumentException("KlokkeSlet og antalEnheder må ikke være forskellige");
-			}
-		else {
+		} else {
 			ArrayList<Dosis> doser = new ArrayList<>();
-			for(int i = 0; i < klokkeSlet.length; i++) {
+
+			for (int i = 0; i < klokkeSlet.length; i++) {
 				Dosis d = new Dosis(klokkeSlet[i], antalEnheder[i]);
 				doser.add(d);
 			}
@@ -113,11 +99,7 @@ public class Controller {
 	 * IllegalArgumentException Pre: ordination og dato er ikke null
 	 */
 	public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-		if (dato.compareTo(ordination.getStartDen()) >= 0 && dato.compareTo(ordination.getSlutDen()) <= 0) {
-			throw new IllegalArgumentException("Dato er ikke indenfor ordineringsperioden");
-		} else {
-			ordination.givDosis(dato);
-		}
+		ordination.givDosis(dato);
 	}
 
 	/**
@@ -143,10 +125,10 @@ public class Controller {
 	 */
 	public int antalOrdinationerPrVægtPrLægemiddel(double vægtStart, double vægtSlut, Laegemiddel laegemiddel) {
 		int counter = 0;
-		for(Patient p : storage.getAllPatienter()) {
-				if(p.getOrdinationer().size() > 0 && p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
-					for(Ordination o : p.getOrdinationer()) {
-						if(o.getLaegemiddel().equals(laegemiddel)) {
+		for (Patient p : storage.getAllPatienter()) {
+			if (p.getOrdinationer().size() > 0 && p.getVaegt() >= vægtStart && p.getVaegt() <= vægtSlut) {
+				for (Ordination o : p.getOrdinationer()) {
+					if (o.getLaegemiddel().equals(laegemiddel)) {
 						counter++;
 					}
 				}
@@ -161,19 +143,6 @@ public class Controller {
 
 	public List<Laegemiddel> getAllLaegemidler() {
 		return storage.getAllLaegemidler();
-	}
-
-	/**
-	 * Metode der kan bruges til at checke at en startDato ligger før en slutDato.
-	 *
-	 * @return true hvis startDato er før slutDato, false ellers.
-	 */
-	private boolean checkStartFoerSlut(LocalDate startDato, LocalDate slutDato) {
-		boolean result = true;
-		if (slutDato.compareTo(startDato) < 0) {
-			result = false;
-		}
-		return result;
 	}
 
 	public Patient opretPatient(String cpr, String navn, double vaegt) {
@@ -215,7 +184,7 @@ public class Controller {
 				storage.getAllLaegemidler().get(1), 123);
 
 		opretDagligFastOrdination(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12),
-				storage.getAllPatienter().get(1), storage.getAllLaegemidler().get(1), 2, -1, 1, -1);
+				storage.getAllPatienter().get(1), storage.getAllLaegemidler().get(1), 2, 1, 1, 1); //2, -1, 1, -1
 
 		LocalTime[] kl = { LocalTime.of(12, 0), LocalTime.of(12, 40), LocalTime.of(16, 0), LocalTime.of(18, 45) };
 		double[] an = { 0.5, 1, 2.5, 3 };
@@ -223,5 +192,4 @@ public class Controller {
 		opretDagligSkaevOrdination(LocalDate.of(2019, 1, 23), LocalDate.of(2019, 1, 24),
 				storage.getAllPatienter().get(1), storage.getAllLaegemidler().get(2), kl, an);
 	}
-
 }

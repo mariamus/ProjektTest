@@ -26,11 +26,16 @@ public class PN extends Ordination {
 	 * @return
 	 */
 	public boolean givDosis(LocalDate givesDen) {
-		if (givesDen.compareTo(super.getStartDen()) >= 0 && givesDen.compareTo(super.getSlutDen()) <= 0) {
-			datoerGivet.add(givesDen);
-			return true;
+		try {
+			if (givesDen.compareTo(super.getStartDen()) >= 0 && givesDen.compareTo(super.getSlutDen()) <= 0) {
+				datoerGivet.add(givesDen);
+				return true;
+			}
+			return false;
+		} catch (NullPointerException e) {
+			System.out.println(e);
+			return false;
 		}
-		return false;
 	}
 
 	public double doegnDosis() {

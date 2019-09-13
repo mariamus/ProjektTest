@@ -53,7 +53,7 @@ public class DagligFastTest {
 	@Test
 	public void testDoegnDosis() {
 		assertEquals(4, df.doegnDosis(), 0.00001);
-		assertEquals(0, df2.samletDosis(), 0.00001);
+		assertEquals(0, df2.doegnDosis(), 0.00001);
 
 	}
 }
