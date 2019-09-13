@@ -131,7 +131,7 @@ public class OpretOrdinationDialog extends Stage {
 			}
 			this.hide();
 		} catch (NumberFormatException e) {
-			throw new NumberFormatException("Der er ikke angivet korrekt antal");
+			lblError.setText("Du må ikke bruge bogstaver!");
 
 		}
 	}
