@@ -132,8 +132,8 @@ public class OrdinationDetailsPane extends GridPane {
         txtStarttid.setText(ordination.getStartDen().toString());
         txtSluttid.setText(ordination.getSlutDen().toString());
         txtLaegemiddel.setText(ordination.getLaegemiddel().toString());
-        txtDoegndosis.setText(ordination.doegnDosis() + "");
-        txtTotalDosis.setText(ordination.samletDosis() + "");
+        txtDoegndosis.setText(ordination.doegnDosis() + " " + ordination.getLaegemiddel().getEnhed());
+        txtTotalDosis.setText(ordination.samletDosis() + " " + ordination.getLaegemiddel().getEnhed());
     }
 
     public void setFast(Dosis morgen, Dosis middag, Dosis aften, Dosis nat) {
@@ -156,14 +156,14 @@ public class OrdinationDetailsPane extends GridPane {
         textAreaSkaev.clear();
         this.add(textAreaSkaev, 0, 6, 2, 1);
         for (Dosis d : skaev.getDoser()) {
-            textAreaSkaev.appendText(d.toString() + "\n");
+            textAreaSkaev.appendText(d.toString() + " " + skaev.getLaegemiddel().getEnhed() + "\n");
         }
     }
 
     public void setPN(PN pn) {
         this.pn = pn;
         this.add(pnPane, 0, 6, 2, 1);
-        txtDosis.setText(pn.getAntalEnheder() + "");
+        txtDosis.setText(pn.getAntalEnheder() + " " + pn.getLaegemiddel().getEnhed());
         txtAnvendt.setText(pn.getAntalGangeGivet() + " antal");
     }
 
