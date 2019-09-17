@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,11 +18,10 @@ import ordination.PN;
 import ordination.Patient;
 
 public class ControllerTest {
-	
+
 	Controller c = Controller.getTestController();
 	Patient p = new Patient("121256-0512", "Jane Jensen", 63.4);
 	Laegemiddel lm = new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
-
 
 	@Test
 	public void testOpretPNOrdination() {
@@ -64,27 +64,44 @@ public class ControllerTest {
 		antal[0] = 2;
 		tid[0] = LocalTime.of(9, 00);
 
-		DagligSkaev ds = c.opretDagligSkaevOrdination(LocalDate.of(2019, 1, 14), LocalDate.of(2019, 1, 15), p, lm, tid, antal);
+		DagligSkaev ds = c.opretDagligSkaevOrdination(LocalDate.of(2019, 1, 14), LocalDate.of(2019, 1, 15), p, lm, tid,
+				antal);
 
 		assertTrue(ds instanceof DagligSkaev);
 
 		assertEquals(2, ds.getDoser().get(0).getAntal(), 0);
 
 	}
-
-
-
+	
 	@Test
+	public void testOrdinationPNAnvendt0dage() {
+		// arrange
+		LocalDate date = LocalDate.now();
+		PN proNec = c.opretPNOrdination(LocalDate.now(), date, p, lm, 12);
+		// act
+		c.ordinationPNAnvendt(proNec, LocalDate.now());
+		//assert
+		assertTrue(proNec.getDatoerGivet().contains(date));
+	}
+	
+	@Test
+	public void testOrdinationPNAnvendt3dage() {
+		// arrange
+		LocalDate date = LocalDate.now().plusDays(3);
+		PN proNec = c.opretPNOrdination(LocalDate.now(), date, p, lm, 12);
+		// act
+		c.ordinationPNAnvendt(proNec, LocalDate.now().plusDays(3));
+		//assert
+		assertTrue(proNec.getDatoerGivet().contains(date));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testOrdinationPNAnvendtUgyldigDato() {
-		//arrange
+		// arrange
 		PN proNec = c.opretPNOrdination(LocalDate.now(), LocalDate.now().plusDays(3), p, lm, 12);
 		// act
-		try {
-			c.ordinationPNAnvendt(proNec, LocalDate.now().plusDays(15));
-		} catch (IllegalArgumentException e) {
-			assertEquals(e.getMessage(), "Ugyldig dato.");
-		}
-
+		c.ordinationPNAnvendt(proNec, LocalDate.now().plusDays(15));
+		fail("Ordinationen forsøges anvendt uden for den tilladte peridode");
 	}
 
 	@Test

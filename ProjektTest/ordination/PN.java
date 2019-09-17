@@ -31,7 +31,9 @@ public class PN extends Ordination {
 				datoerGivet.add(givesDen);
 				return true;
 			}
-			return false;
+			else {
+				throw new IllegalArgumentException("Ordinationen forsøges anvendt uden for den givne periode");
+			}
 		} catch (NullPointerException e) {
 			System.out.println(e);
 			return false;
@@ -53,6 +55,10 @@ public class PN extends Ordination {
 	 */
 	public int getAntalGangeGivet() {
 		return datoerGivet.size();
+	}
+
+	public ArrayList<LocalDate> getDatoerGivet() {
+		return datoerGivet;
 	}
 
 	public double getAntalEnheder() {
