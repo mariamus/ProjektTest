@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import ordination.DagligFast;
 import ordination.Dosis;
+import ordination.Laegemiddel;
 
 public class DagligFastTest {
 
@@ -20,9 +21,11 @@ public class DagligFastTest {
 
 	Dosis[] doser = { d, d2, d3, d4 };
 	Dosis[] doser2 = { d5, d5, d5, d5 };
+	
+	Laegemiddel lm = new Laegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
 
-	private DagligFast df = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), null, doser);
-	private DagligFast df2 = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), null, doser2);
+	private DagligFast df = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), lm, doser);
+	private DagligFast df2 = new DagligFast(LocalDate.of(2019, 1, 10), LocalDate.of(2019, 1, 12), lm, doser2);
 
 	
 	@Test
