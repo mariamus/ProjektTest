@@ -26,10 +26,6 @@ public class DagligSkaevTest {
 	Dosis[] doserArray = { d, d2, d3, d4 };
 
 	
-	
-
-
-	
 	@Test
 	public void testDagligSkaev() {
 		LocalDate startDate = LocalDate.now();
